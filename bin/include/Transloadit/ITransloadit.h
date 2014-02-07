@@ -52,10 +52,4 @@
  */
 -(void) useSignature:(NSString*)secret;
 
-/**
- * Use bored instance or not.
- * @param useBoredInstance True if use bored instance, false to not.
- */
--(void)useBoredInstance:(bool)useBoredInstance;
-
 @end

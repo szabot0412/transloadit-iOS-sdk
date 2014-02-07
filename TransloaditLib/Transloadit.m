@@ -18,19 +18,10 @@
     secret=_secret;
 }
 
-
--(void)useBoredInstance:(bool)_useBoredInstance
-{
-    useBoredInstance = _useBoredInstance;
-}
-
-
 -(id)init:(NSString*)_key
 {
     if (self = [super init])
 	{
-        useBoredInstance=true;
-        
     	key=_key;
     }
     
@@ -76,6 +67,31 @@
     return nil;
 }
 
+
+-(NSString*)getBoredInstanceServerWithError:(NSError*)error
+{
+    TransloaditRequest* request = [self request];
+    
+    [request setMethod:GET];
+    
+    [request setPath:BORED_INSTANCE_PATH];
+    
+    TransloaditResponse* boredInstance = (TransloaditResponse*)[self requestAndExecute:request withError:error];
+    
+    if (error==nil && [boredInstance isSuccess])
+    {
+        return [[boredInstance getData] objectForKey:@"api2_host"];
+        
+    }else
+    {
+        TRANSLOADIT_LOG_ERROR_WITH_ERROR_AND_MESSAGE(self.class, error,@"Bored instance host is invalid using default path %@",[[boredInstance getData] objectForKey:@"api2_host"]);
+        
+        return DEFAULT_HOST;
+    }
+    
+}
+
+
 -(TransloaditResponse*)invokeAssembly:(NSObject<IAssemblyBuilder>*) assembly withError:(NSError *)error
 {
     
@@ -83,25 +99,7 @@
     
     [assembly setAuthKey:key];
     
-    if (useBoredInstance)
-    {
-        [request setMethod:GET];
-        
-        [request setPath:BORED_INSTANCE_PATH];
-        
-        TransloaditResponse* boredInstance = (TransloaditResponse*)[self requestAndExecute:request withError:error];
-        
-        if (error==nil && [boredInstance isSuccess])
-        {
-            [request setHost:[[boredInstance getData] objectForKey:@"api2_host"]];
-            
-        }else
-        {
-            TRANSLOADIT_LOG_ERROR_WITH_ERROR_AND_MESSAGE(self.class, error,@"Bored instance host is invalid using default path %@",[[boredInstance getData] objectForKey:@"api2_host"]);
-            
-            [request setHost:DEFAULT_HOST];
-        }
-    }
+    [request setHost:[self getBoredInstanceServerWithError:error]];
     
     error=nil;
     

@@ -17,10 +17,6 @@
     
     /** The API Secret code of the current Transloadit user. This code is used for each request if signature authentication is enabled */
     NSString* secret;
-    
-    /** Use bored instance flag*/
-    bool useBoredInstance;
-
 }
 
 

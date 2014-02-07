@@ -278,7 +278,7 @@ The SDK works only with Automatic Reference Counting enabled.
 
 If you would like to use the iOS SDK for Transloadit in your application, you need to add it as a static library, or you need to pull the latest commit, and use the source directly.
 
-Transloadit services work with assemblies. An assembly must contain each information which will be used for authentication and processing. Each assembly must contain authentication information, steps or template ID. You can set custom, and optional values like custom fields and files too.
+Transloadit services work with assemblies. An assembly must contain each piece of information which will be used for authentication and processing. Each assembly must contain authentication information and steps or template ID. You can set custom, and optional values like custom fields and files too.
 
 > **Note:** template ID is the ID of a Transloadit template that can be created in your Transloadit account.
 
@@ -401,7 +401,7 @@ The SDK provides you the possibility to log information and errors. You can use 
 
 > **Note: ** `TRANSLOADIT_LOG_ERROR_` macro has more parameter definition
 
-##3. Extend Transloadit .NET API##
+##3. Extend Transloadit iOS API##
 
 The SDK is able to be extended. You can use the interfaces to create your own implementations and you can extend the pre-created classes.
 
