@@ -108,18 +108,18 @@
 
     NSData *returnData = [NSURLConnection sendSynchronousRequest:req returningResponse:nil error: &error];
     
-    NSString* returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+    NSString* returnString=nil;
     
     if(error!=nil)
     {
     	TRANSLOADIT_LOG_ERROR(self.class, error);
     }else
     {
+        returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+        
         TRANSLOADIT_LOG_INFO(self.class,@"%@",returnString);
     }
     
-    //NSLog(@"%@", [[NSString alloc] initWithData:body encoding:NSASCIIStringEncoding]);
-
     return returnString;
     
 }
